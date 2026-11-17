@@ -23,9 +23,16 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.2"
-      - uses: android-actions/setup-android@v3
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: |
+            platform-tools
+            platforms;android-35
+            build-tools;35.0.0
       - name: Unpack Android Studio project
         run: |
+          test -f NEXUS_ANDROID_9_SETTINGS_GITHUB_V5.zip
           unzip -q NEXUS_ANDROID_9_SETTINGS_GITHUB_V5.zip
           cd NEXUS_ANDROID_9_SETTINGS
           gradle --no-daemon clean assembleDebug
